@@ -2,6 +2,7 @@ package jerarquicas;
 
 import lineales.dinamicas.Cola;
 import lineales.dinamicas.Lista;
+import lineales.dinamicas.Nodo;
 
 public class ArbolBin {
 
@@ -287,4 +288,44 @@ public class ArbolBin {
         }
         return texto;
     }
+
+    public boolean verificarPatron(Lista patron) {
+        /**
+         * Implementar la operación boolean verificarPatron(Lista patron), que
+         * recibe por parámetro una lista patron y determine si coincide
+         * exactamente con al menos un camino del árbol que comience en la raíz
+         * y termine en una hoja. El método debe ser eficiente, es decir,
+         * recorrer el árbol lo estrictamente necesario.
+         */
+        boolean res = false;
+        if (!esVacia()) {
+            Lista lis = patron.clone();
+            int pos = 1;
+            verificarPatronAux(this.raiz, lis, pos);
+        }
+        return res;
+    }
+
+    private void verificarPatronAux(NodoArbol nodo, Lista lis, int posLista) {
+        if (true) {
+
+        } else {
+        }
+    }
+    /*
+     * ArbolBin
+     * -raiz: NodoArbol
+     * +insertar(Object padre, Object elemento, char lado): boolean
+     * +listarPreorden(): Lista
+     * +listarPosorden(): Lista
+     * +listarInorden(): Lista
+     * +listarPorNiveles(): Lista
+     * +altura(Object x): int
+     * +nivel(Object x): int
+     * +padre(Object x): Object
+     * +esVacia(): boolean
+     * +vaciar(): void
+     * +clone(): ArbolBin
+     * +toString(): String
+     */
 }
