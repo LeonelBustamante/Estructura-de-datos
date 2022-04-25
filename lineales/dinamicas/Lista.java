@@ -165,6 +165,9 @@ public class Lista {
         /**
          * <res> es la lista que se retornara con elementos solamente si la
          * lista {this} no esta vacia y <num> es un numero dentro del rango
+         *
+         * Eficiencia: Como para obtener los multiplos necesito saber todos los
+         * elementos, se recorre toda la lista por ende es orden n
          */
         Lista res = new Lista();
 
@@ -210,6 +213,10 @@ public class Lista {
         /**
          * <buscado> sera el elemento buscado en la lista y que debe ser
          * eliminado
+         *
+         * Eficiencia: Para poder realizar la eliminación de todas las
+         * apariciones se debio recorrer toda la estructura con 2 punteros 1 vez
+         * sola por ende es de orden n
          */
         Nodo punteroAvanzado = cabecera;
         Nodo punteroPrevio = null;

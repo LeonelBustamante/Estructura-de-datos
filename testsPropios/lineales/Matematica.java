@@ -32,6 +32,9 @@ public class Matematica {
          * precondicion: <cola> debe ser verificada que sea matematicamente
          * correcta no debe haber cosas de la forma "+)" ya que el programa no
          * corroborara que se cumpla matematicamente la cola
+         *
+         * Eficiencia: El metodo es de Orden n ya que para verificarlo se
+         * recorre completamente la cola
          */
         boolean res = false;
 

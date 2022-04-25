@@ -27,6 +27,14 @@ public class TestCadenas {
     }
 
     public static Cola generar(Cola c1) {
+        /**
+         * Se recibe por parametro una cola <c1> la cual crearemos una copia
+         * para poder alterar y copiar los elementos a <res> de manera correcta
+         *
+         * Eficiencia: Para realizar la nueva cola debemos recorrer la
+         * estructura completamente por lo menos 1 vez asi que esta es de orden
+         * n
+         */
         Cola res = new Cola();
         if (!c1.esVacia()) {
             Cola clon = c1.clone();
