@@ -2,7 +2,6 @@ package jerarquicas;
 
 import lineales.dinamicas.Cola;
 import lineales.dinamicas.Lista;
-import lineales.dinamicas.Nodo;
 
 public class ArbolBin {
 
@@ -306,12 +305,66 @@ public class ArbolBin {
         return res;
     }
 
-    private void verificarPatronAux(NodoArbol nodo, Lista lis, int posLista) {
-        if (true) {
-
+    private boolean verificarPatronAux(NodoArbol nodo, Lista patron, int pos) {
+        boolean exito = false;
+        if (pos > patron.longitud()) {
+            exito = true;
         } else {
+            if (nodo != null && nodo.getElem().equals(patron.recuperar(pos))) {
+                exito = verificarPatronAux(nodo.getIzquierdo(), patron, pos + 1);
+                if (!exito) {
+                    exito = verificarPatronAux(nodo.getDerecho(), patron, pos + 1);
+                }
+            }
+
+        }
+        return exito;
+    }
+
+    public Lista frontera() {
+        /**
+         * Implementar la operación frontera() que devuelve una lista con la
+         * secuencia formada por los elementos almacenados en las hojas del
+         * árbol binario, tomadas de izquierda a derecha
+         */
+        Lista lis = new Lista();
+        if (!esVacia()) {
+            fronteraAux(this.raiz, lis);
+        }
+        return lis;
+    }
+
+    private void fronteraAux(NodoArbol nodo, Lista lis) {
+        if (nodo.getIzquierdo() == null && nodo.getDerecho() == null) {
+            lis.insertar(nodo.getElem(), lis.longitud() + 1);
+        } else {
+            fronteraAux(nodo.getIzquierdo(), lis);
+            fronteraAux(nodo.getDerecho(), lis);
         }
     }
+
+    public ArbolBin clonarInvertido() {
+        ArbolBin clon = new ArbolBin();
+        if (this.esVacia()) {
+            clon.raiz = new NodoArbol(this.raiz.getElem(), null, null);
+            clonarInvertidoAux(this.raiz, clon.raiz);
+        }
+        return clon;
+    }
+
+    private void clonarInvertidoAux(NodoArbol orig, NodoArbol clon) {
+        if (orig != null) {
+            if (orig.getIzquierdo() != null) {
+                clon.setDerecho(new NodoArbol(orig.getIzquierdo().getElem(), null, null));
+            }
+            if (orig.getDerecho() != null) {
+                clon.setIzquierdo(new NodoArbol(orig.getDerecho().getElem(), null, null));
+            }
+            clonarInvertidoAux(orig.getIzquierdo(), clon.getDerecho());
+            clonarInvertidoAux(orig.getDerecho(), clon.getIzquierdo());
+        }
+    }
+
     /*
      * ArbolBin
      * -raiz: NodoArbol
