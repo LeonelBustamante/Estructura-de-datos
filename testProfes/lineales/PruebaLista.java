@@ -1,4 +1,4 @@
-package test.lineales;
+package testProfes.lineales;
 
 import lineales.dinamicas.*;
 
