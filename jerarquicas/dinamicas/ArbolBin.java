@@ -1,4 +1,4 @@
-package jerarquicas;
+package jerarquicas.dinamicas;
 
 import lineales.dinamicas.Cola;
 import lineales.dinamicas.Lista;
@@ -101,19 +101,22 @@ public class ArbolBin {
     public Lista listarPorNiveles() {
         //Metodo que realiza un recorrido por nivel y se retorna en una lista el resultado de esta
         Lista lista = new Lista();
-        Cola q = new Cola();
-        q.poner(this.raiz);
-        while (!q.esVacia()) {
-            NodoArbol nodo = (NodoArbol) q.obtenerFrente();
-            q.sacar();
-            lista.insertar(nodo.getElem(), lista.longitud() + 1);
-            if (nodo.getIzquierdo() != null) {
-                q.poner(nodo.getIzquierdo());
-            }
-            if (nodo.getDerecho() != null) {
-                q.poner(nodo.getDerecho());
-            }
-        }//{Fin mientras}
+        Cola cola = new Cola();
+        cola.poner(this.raiz);
+        if (!esVacia()) {
+
+            while (!cola.esVacia()) {
+                NodoArbol nodo = (NodoArbol) cola.obtenerFrente();
+                cola.sacar();
+                lista.insertar(nodo.getElem(), lista.longitud() + 1);
+                if (nodo.getIzquierdo() != null) {
+                    cola.poner(nodo.getIzquierdo());
+                }
+                if (nodo.getDerecho() != null) {
+                    cola.poner(nodo.getDerecho());
+                }
+            }//{Fin mientras}
+        }//fin{if}
         return lista;
     }
 

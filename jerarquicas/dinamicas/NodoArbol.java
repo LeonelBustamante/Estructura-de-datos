@@ -1,4 +1,4 @@
-package jerarquicas;
+package jerarquicas.dinamicas;
 
 public class NodoArbol {
 
