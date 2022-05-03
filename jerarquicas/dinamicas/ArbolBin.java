@@ -48,11 +48,13 @@ public class ArbolBin {
     }
 
     public ArbolBin clone() {
-        ArbolBin clon = new ArbolBin();
-        if (!esVacia()) {
-            clon.raiz = cloneAux(this.raiz, clon.raiz);
+        ArbolBin copia = new ArbolBin();
+
+        if (!this.esVacia()) {
+            copia.raiz = cloneAux(this.raiz);
         }
-        return clon;
+
+        return copia;
     }
 
     public boolean esVacia() {
@@ -165,22 +167,19 @@ public class ArbolBin {
         return Math.max(alturaIzquierda, alturaDerecha);
     }
 
-    private NodoArbol cloneAux(NodoArbol nodoOriginal, NodoArbol nodoClon) {
+    private NodoArbol cloneAux(NodoArbol nodo) {
         //Metodo privado que clona el arbol mediante un recorrido en preorden
 
         //Se crea el nodo en el que nos encontramos
-        nodoClon = new NodoArbol(nodoOriginal.getElem(), null, null);
+        NodoArbol nuevoNodo = new NodoArbol(nodo.getElem(), null, null);
 
-        if (nodoOriginal.getIzquierdo() != null) {
-            //En caso de existir el hijo izquierdo bajamos 
-            nodoClon.setIzquierdo(cloneAux(nodoOriginal.getIzquierdo(), nodoClon.getIzquierdo()));
-
-        } else if (nodoOriginal.getDerecho() != null) {
-            //En caso de existir el hijo derecho bajamos 
-            nodoClon.setDerecho(cloneAux(nodoOriginal.getDerecho(), nodoClon.getDerecho()));
-        }//{fin revision de hijos en original}
-
-        return nodoClon;
+        if (nodo.getIzquierdo() != null) {
+            nuevoNodo.setIzquierdo(cloneAux(nodo.getIzquierdo()));
+        }
+        if (nodo.getDerecho() != null) {
+            nuevoNodo.setDerecho(cloneAux(nodo.getDerecho()));
+        }
+        return nuevoNodo;
     }
 
     private void listarInordenAux(NodoArbol nodo, Lista lista) {

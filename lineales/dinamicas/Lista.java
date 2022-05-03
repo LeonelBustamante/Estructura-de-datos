@@ -240,4 +240,19 @@ public class Lista {
             }
         }
     }
+
+    public void insertarAnterior(Object elem1, Object elem2) {
+        if (!esVacia()) {
+            Nodo aux = this.cabecera;
+            while (aux != null) {
+                if (aux.getElem().equals(elem1)) {
+
+                }
+
+            }
+
+        }
+
+    }
+
 }

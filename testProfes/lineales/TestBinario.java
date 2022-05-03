@@ -161,6 +161,8 @@ public class TestBinario {
         System.out.println("\n\n********************************");
         System.out.println("*   Test de Busqueda de Padre  *");
         System.out.println("********************************\n");
+        System.out.println(a);
+        System.out.println(a.padre(3));
         System.out.println("Busco al padre de 3. Tiene que dar 9: " + sOk + " --> " + (((int) a.padre(3) == 9) ? sOk : sErr));
         System.out.println("Busco al padre de 20. Tiene que dar 15: " + sOk + " --> " + (((int) a.padre(20) == 15) ? sOk : sErr));
         System.out.println("Busco al padre de raiz. Tiene que dar null: " + sOk + " --> " + ((a.padre(10) == null) ? sOk : sErr));
