@@ -14,7 +14,7 @@ public class TestGen {
         a.insertar('5', 2);
         a.insertar('6', 3);
         a.insertar('7', 2);
-        System.out.println("TERMINADO");
+        System.out.println(a);
         System.out.println(a.listarPreorden());
         System.out.println(a.listarPosorden());
     }

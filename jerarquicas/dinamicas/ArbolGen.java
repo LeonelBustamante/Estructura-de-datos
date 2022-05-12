@@ -29,10 +29,10 @@ public class ArbolGen {
             }
 
             if (nodo.getHijoIzquierdo() != null) {
-                NodoGen hijo = nodo.getHijoIzquierdo().getHermandoDerecho();
+                NodoGen hijo = nodo.getHijoIzquierdo().getHermanoDerecho();
                 while (hijo != null) {
                     listarPreordenAux(hijo, lista);
-                    hijo = hijo.getHermandoDerecho();
+                    hijo = hijo.getHermanoDerecho();
                 }
 
             }
@@ -54,10 +54,10 @@ public class ArbolGen {
             }
 
             if (nodo.getHijoIzquierdo() != null) {
-                NodoGen hijo = nodo.getHijoIzquierdo().getHermandoDerecho();
+                NodoGen hijo = nodo.getHijoIzquierdo().getHermanoDerecho();
                 while (hijo != null) {
                     listarPreordenAux(hijo, lista);
-                    hijo = hijo.getHermandoDerecho();
+                    hijo = hijo.getHermanoDerecho();
                 }
 
                 lista.insertar(nodo.getElem(), lista.longitud() + 1);
@@ -82,7 +82,28 @@ public class ArbolGen {
     }
 
     public String toString() {
-        return null;
+        return toStringAux(this.raiz);
+    }
+
+    private String toStringAux(NodoGen nodo) {
+        String cadena = "";
+        if (nodo != null) {
+            cadena += nodo.getElem() + " -> ";
+
+            NodoGen hijo = nodo.getHijoIzquierdo();
+            while (hijo != null) {
+                cadena += hijo.getElem() + " , ";
+                hijo = hijo.getHermanoDerecho();
+            }
+
+            // Comienza de nuevo desde el hijo y llama
+            hijo = nodo.getHijoIzquierdo();
+            while (hijo != null) {
+                cadena = "\n" + toStringAux(hijo);
+                hijo = hijo.getHermanoDerecho();
+            }
+        }
+        return cadena;
     }
 
     public void vaciar() {
@@ -149,7 +170,7 @@ public class ArbolGen {
             if (nodo.getElem().equals(buscado)) {
                 res = nodo;
             } else {
-                res = buscarNodo(nodo.getHermandoDerecho(), buscado);
+                res = buscarNodo(nodo.getHermanoDerecho(), buscado);
                 if (res == null) {
                     res = buscarNodo(nodo.getHijoIzquierdo(), buscado);
                 }

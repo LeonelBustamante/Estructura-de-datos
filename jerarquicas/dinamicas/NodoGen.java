@@ -16,7 +16,7 @@ public class NodoGen {
         return this.elem;
     }
 
-    public NodoGen getHermandoDerecho() {
+    public NodoGen getHermanoDerecho() {
         return this.hermanoDerecho;
     }
 
