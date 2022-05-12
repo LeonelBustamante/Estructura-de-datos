@@ -138,14 +138,6 @@ public class ArbolGen {
     }
 
     public boolean insertar(Object elemNuevo, Object elemPadre) {
-        /*
-         * Dado un elemento elemNuevo y un elemento elemPadre, agrega elemNuevo como
-         * hijo de la primer aparición de elemPadre. Para que la operación termine con
-         * éxito debe existir un nodo en el árbol con elemento = elemPadre. No se
-         * establece ninguna preferencia respecto a la posición del hijo respecto a sus
-         * posibles hermanos. Esta operación devuelve verdadero cuando se pudo agregar
-         * elemNuevo a la estructura y falso en caso contrario.
-         */
         boolean res = false;
         if (this.esVacio()) {
             this.raiz = new NodoGen(elemNuevo, null, null);
