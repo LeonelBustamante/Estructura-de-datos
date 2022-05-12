@@ -19,13 +19,13 @@ public class ArbolBin {
         int encontrado = -1;
 
         if (nodo != null) {
-            //En caso de nodo null se retorna -1
+            // En caso de nodo null se retorna -1
             if (nodo.getElem().equals(buscado)) {
-                //Una vez encontrado asignamos a encontrado el nivel +1
+                // Una vez encontrado asignamos a encontrado el nivel +1
                 encontrado = nivel + 1;
 
             } else if (nodo.getIzquierdo() == null && nodo.getDerecho() == null) {
-                //Si llegamos a una hoja encontrado se asigna con -1 y se retorna
+                // Si llegamos a una hoja encontrado se asigna con -1 y se retorna
                 encontrado = -1;
 
             } else if (nodo.getIzquierdo() != null) {
@@ -83,14 +83,14 @@ public class ArbolBin {
                 } else {
                     // Si ya tiene hijo en <lado> es false
                     res = false;
-                } //{fin eleccion de lado} 
+                } // {fin eleccion de lado}
 
             } else {
                 // Si el padre no existe entonces false
                 res = false;
-            } //{fin nodopadre != null} 
+            } // {fin nodopadre != null}
 
-        }//{Fin esVacia()}
+        } // {Fin esVacia()}
         return res;
     }
 
@@ -101,7 +101,8 @@ public class ArbolBin {
     }
 
     public Lista listarPorNiveles() {
-        //Metodo que realiza un recorrido por nivel y se retorna en una lista el resultado de esta
+        // Metodo que realiza un recorrido por nivel y se retorna en una lista el
+        // resultado de esta
         Lista lista = new Lista();
         Cola cola = new Cola();
         cola.poner(this.raiz);
@@ -117,8 +118,8 @@ public class ArbolBin {
                 if (nodo.getDerecho() != null) {
                     cola.poner(nodo.getDerecho());
                 }
-            }//{Fin mientras}
-        }//fin{if}
+            } // {Fin mientras}
+        } // fin{if}
         return lista;
     }
 
@@ -168,9 +169,9 @@ public class ArbolBin {
     }
 
     private NodoArbol cloneAux(NodoArbol nodo) {
-        //Metodo privado que clona el arbol mediante un recorrido en preorden
+        // Metodo privado que clona el arbol mediante un recorrido en preorden
 
-        //Se crea el nodo en el que nos encontramos
+        // Se crea el nodo en el que nos encontramos
         NodoArbol nuevoNodo = new NodoArbol(nodo.getElem(), null, null);
 
         if (nodo.getIzquierdo() != null) {
@@ -210,57 +211,59 @@ public class ArbolBin {
     }
 
     private NodoArbol obtenerNodo(NodoArbol nodo, Object buscado) {
-        // Se busca el elemento <buscado> dentro del arbol en caso de no encontrarse se retorna null
+        // Se busca el elemento <buscado> dentro del arbol en caso de no encontrarse se
+        // retorna null
         NodoArbol res = null;
         if (nodo != null) {
             if (nodo.getElem().equals(buscado)) {
-                //Si se encuentra el elemento buscado se retorna
+                // Si se encuentra el elemento buscado se retorna
                 res = nodo;
             } else {
-                //Si no se lo encuentra sigue por HI
+                // Si no se lo encuentra sigue por HI
                 obtenerNodo(nodo.getIzquierdo(), buscado);
 
                 if (res == null) {
-                    //Si aun no se encuentra se busca por rama derecha
+                    // Si aun no se encuentra se busca por rama derecha
                     obtenerNodo(nodo.getDerecho(), buscado);
-                }//{fin res == null}
-            }//{fin equals}
-        }//{fin nodo != null}
+                } // {fin res == null}
+            } // {fin equals}
+        } // {fin nodo != null}
         return res;
     }
 
     private Object padreAux(NodoArbol nodo, Object elem) {
-        //Metodo que busca el padre consultando a cada nodo si es <elem> en caso de serlo se retorna
+        // Metodo que busca el padre consultando a cada nodo si es <elem> en caso de
+        // serlo se retorna
         Object res = null;
         if (nodo != null) {
             if (nodo.getIzquierdo() != null && nodo.getIzquierdo().equals(elem)) {
-                //Si el elemento es el hijo izquierdo se asigna como resultado
+                // Si el elemento es el hijo izquierdo se asigna como resultado
                 res = nodo.getElem();
 
             } else if (nodo.getIzquierdo() != null && nodo.getIzquierdo().equals(elem)) {
-                //Si el elemento es el hijo derecho se asigna como resultado
+                // Si el elemento es el hijo derecho se asigna como resultado
                 res = nodo.getElem();
 
             } else {
-                //Si no es se seguira buscando en el resto del arbol en preorden
+                // Si no es se seguira buscando en el resto del arbol en preorden
                 res = padreAux(nodo.getIzquierdo(), elem);
                 if (res == null) {
                     res = padreAux(nodo.getDerecho(), elem);
-                }//{fin res == null}
+                } // {fin res == null}
 
-            }//{fin busqueda del hijo}
-        }//{fin nodo!=null}
+            } // {fin busqueda del hijo}
+        } // {fin nodo!=null}
         return res;
     }
 
     private String toStringAux(NodoArbol nodo, String texto) {
         if (nodo != null) {
             /*
-            Casos posibles:
-            Ambos hijos
-            Sin hijos
-            Hijo izq
-            Hijo derecho
+             * Casos posibles:
+             * Ambos hijos
+             * Sin hijos
+             * Hijo izq
+             * Hijo derecho
              */
             if (nodo.getIzquierdo() != null && nodo.getDerecho() != null) {
                 texto += "NODO: " + nodo.getElem()
@@ -283,7 +286,7 @@ public class ArbolBin {
                         + " HD: --" + "\n";
 
             }
-            //Si existieran nodos visitariamos estos hasta llegar al null
+            // Si existieran nodos visitariamos estos hasta llegar al null
             texto = toStringAux(nodo.getIzquierdo(), texto);
             texto = toStringAux(nodo.getDerecho(), texto);
         }
