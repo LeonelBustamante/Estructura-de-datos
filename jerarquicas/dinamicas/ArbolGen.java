@@ -41,9 +41,7 @@ public class ArbolGen {
 
     public Lista listarPosorden() {
         Lista lista = new Lista();
-        if (!esVacio()) {
-            listarPosordenAux(this.raiz, lista);
-        }
+        listarPosordenAux(this.raiz, lista);
         return lista;
     }
 
@@ -67,14 +65,27 @@ public class ArbolGen {
 
     public Lista listarInorden() {
         Lista lista = new Lista();
-        if (!esVacio()) {
-            listarInordenAux(this.raiz, lista);
-        }
+        listarInordenAux(this.raiz, lista);
         return lista;
+
     }
 
     private void listarInordenAux(NodoGen nodo, Lista lista) {
-        lista.insertar(nodo.getElem(), lista.longitud() + 1);
+        if (nodo != null) {
+            if (nodo.getHijoIzquierdo() != null) {
+                listarInordenAux(nodo.getHijoIzquierdo(), lista);
+            }
+            lista.insertar(nodo.getElem(), lista.longitud() + 1);
+
+            if (nodo.getHijoIzquierdo() != null) {
+                NodoGen hijo = nodo.getHijoIzquierdo().getHermanoDerecho();
+                while (hijo != null) {
+                    listarInordenAux(hijo, lista);
+                    hijo = hijo.getHermanoDerecho();
+                }
+
+            }
+        }
     }
 
     public Lista listarPorNiveles() {
@@ -92,14 +103,14 @@ public class ArbolGen {
 
             NodoGen hijo = nodo.getHijoIzquierdo();
             while (hijo != null) {
-                cadena += hijo.getElem() + " , ";
+                cadena += hijo.getElem() + " ";
                 hijo = hijo.getHermanoDerecho();
             }
 
             // Comienza de nuevo desde el hijo y llama
             hijo = nodo.getHijoIzquierdo();
             while (hijo != null) {
-                cadena = "\n" + toStringAux(hijo);
+                cadena += "\n" + toStringAux(hijo);
                 hijo = hijo.getHermanoDerecho();
             }
         }
