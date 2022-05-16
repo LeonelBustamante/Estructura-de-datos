@@ -28,7 +28,7 @@ public class NodoGen {
         this.elem = elem;
     }
 
-    public void setHermandoDerecho(NodoGen nodo) {
+    public void setHermanoDerecho(NodoGen nodo) {
         this.hermanoDerecho = nodo;
     }
 

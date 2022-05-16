@@ -82,7 +82,7 @@ public class Lista {
             int i = 1;
             boolean corte = false;
             while (aux != null && !corte) {
-                if (aux.getElem() == buscado) {
+                if (aux.getElem().equals(buscado)) {
                     res = i;
                     corte = true;
                 }
@@ -133,7 +133,7 @@ public class Lista {
     }
 
     public void invertir() {
-        // Metodo que envia la cabecera y se comienza a recorrer recursivamente 
+        // Metodo que envia la cabecera y se comienza a recorrer recursivamente
         // la lista. Cuando se llegue al ultimo nodo se asignara a la cabecera
         // y se retornara para setear como enlace el nodo anterior
         Nodo ultimo = invertirAux(this.cabecera);
@@ -142,7 +142,7 @@ public class Lista {
 
     private Nodo invertirAux(Nodo nodoActual) {
         if (nodoActual.getEnlace() == null) {
-            //Cuando llegue al ultimo nodo lo asigno a la cabecera
+            // Cuando llegue al ultimo nodo lo asigno a la cabecera
             this.cabecera = nodoActual;
         } else {
             Nodo nodoVolviendo = invertirAux(nodoActual.getEnlace());
@@ -172,21 +172,21 @@ public class Lista {
         Lista res = new Lista();
 
         if (this.cabecera != null && num > 0 && num < this.longitud) {
-            //Si no esta vacio y el numero esta dentro del rango
+            // Si no esta vacio y el numero esta dentro del rango
             Nodo puntero = this.cabecera;
             int posActual = 1;
 
             while (puntero != null) {
 
                 if (posActual % num == 0) {
-                    //Se encontro un nodo multiplo
+                    // Se encontro un nodo multiplo
                     Nodo nuevo = new Nodo(puntero.getElem(), null); // Nodo a insertar
 
                     if (res.cabecera == null) {
-                        //res se encuentra vacia
+                        // res se encuentra vacia
                         res.cabecera = nuevo;
                     } else {
-                        //res no se encuentra vacia
+                        // res no se encuentra vacia
                         nuevo.setEnlace(res.cabecera);
                         res.cabecera = nuevo;
                     }
@@ -197,8 +197,8 @@ public class Lista {
                 posActual += 1;
                 puntero = puntero.getEnlace();
 
-            }//fin while
-        }//fin cuerpo if
+            } // fin while
+        } // fin cuerpo if
         return res;
     }
 
@@ -234,7 +234,7 @@ public class Lista {
 
                 this.longitud--;
             } else {
-                //No se encontro el elemento
+                // No se encontro el elemento
                 punteroPrevio = punteroAvanzado;
                 punteroAvanzado = punteroAvanzado.getEnlace();
             }

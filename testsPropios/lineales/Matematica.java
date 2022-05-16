@@ -12,13 +12,14 @@ public class Matematica {
      * que recibe por parámetro una cola con una expresión matemática y
      * verifique que los paréntesis, corchetes y llaves estén correctamente
      * balanceados. Debe usar como estructura auxiliar alguno de los TDA
-     * lineales vistos, el que considere más apropiado. 
-     * Ejemplos: 
-     * Si q es ← { 5 * + [ 8 * 9 -( 4 / 2 ) + 7 ] -1 } ← el método debe devolver TRUE 
+     * lineales vistos, el que considere más apropiado.
+     * Ejemplos:
+     * Si q es ← { 5 * + [ 8 * 9 -( 4 / 2 ) + 7 ] -1 } ← el método debe devolver
+     * TRUE
      * Si q es ← { 5 + 8 * 9 -( 4 / 2 ) + 7 ] -1 } ← el método debe devolver FALSE
      */
     public static void main(String[] args) {
-        String cadena = "{5*+[8*9-(4/2)+7]-1}";
+        // String cadena = "{5*+[8*9-(4/2)+7]-1}";
         String cadena2 = "{5+8*9-(4/2)+7]-1}";
         Cola cola = new Cola();
         for (int i = 0; i < cadena2.length(); i++) {
@@ -50,14 +51,14 @@ public class Matematica {
                 System.out.println(charCola);
                 if (esSimbolo(charCola)) {
                     System.out.println("Chequeando simbolo");
-                    //Solamente chequeo balanceo de caracteres { [ ( ) ] } 
+                    // Solamente chequeo balanceo de caracteres { [ ( ) ] }
                     if (esSimboloApertura(charCola)) {
-                        //Si es simbolo de apertura apilo
+                        // Si es simbolo de apertura apilo
                         pila.apilar(charCola);
                     } else if (!pila.esVacia()) {
-                        //Si no es de apertura entonces verifico que 
-                        //no este vacia la pila y tomo el tope para comparar con 
-                        //complemento de charCola
+                        // Si no es de apertura entonces verifico que
+                        // no este vacia la pila y tomo el tope para comparar con
+                        // complemento de charCola
                         System.out.println("Simbolo inverso");
                         charPila = (char) pila.obtenerTope();
                         switch (charCola) {
@@ -66,20 +67,20 @@ public class Matematica {
                             case ')' -> bandera = charPila == '(';
                         }
                         if (bandera) {
-                            //Si esta el elemento correcto entonces desapilar
+                            // Si esta el elemento correcto entonces desapilar
                             pila.desapilar();
                         }
                     } else {
-                        //Se esperaba elemento en Pila
+                        // Se esperaba elemento en Pila
                         bandera = false;
-                    }//Fin consulta simbolo apertura
-                }//Fin if es simbolo
+                    } // Fin consulta simbolo apertura
+                } // Fin if es simbolo
                 clon.sacar();
-            }//Fin while recorre clon
+            } // Fin while recorre clon
             if (bandera && pila.esVacia()) {
                 res = true;
             }
-        }//Fin if cola es vacia
+        } // Fin if cola es vacia
         return res;
     }
 
