@@ -107,16 +107,18 @@ public class ArbolBB {
     private boolean perteneceAux(Comparable elemento, NodoABB nodo) {
         // Devuelve true si el elemento está en el árbol
         boolean pertenece = false;
-        if (elemento.compareTo(nodo.getElemento()) == 0) {
-            // encontrado
-            pertenece = true;
-        } else {
-            if (elemento.compareTo(nodo.getElemento()) < 0) {
-                // recursivo
-                pertenece = perteneceAux(elemento, nodo.getIzquierdo());
+        if (nodo != null) {
+            if (elemento.compareTo(nodo.getElemento()) == 0) {
+                // encontrado
+                pertenece = true;
             } else {
-                // recursivo
-                pertenece = perteneceAux(elemento, nodo.getDerecho());
+                if (elemento.compareTo(nodo.getElemento()) < 0) {
+                    // recursivo
+                    pertenece = perteneceAux(elemento, nodo.getIzquierdo());
+                } else {
+                    // recursivo
+                    pertenece = perteneceAux(elemento, nodo.getDerecho());
+                }
             }
         }
         return pertenece;
@@ -219,6 +221,7 @@ public class ArbolBB {
     public String toString() {
         String cadena = "ESTRUCTURA VACIA";
         if (!esVacio()) {
+            cadena = "";
             cadena = toStringAux(this.raiz, cadena);
         }
         return cadena;
