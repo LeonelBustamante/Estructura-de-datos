@@ -1,21 +1,15 @@
 package conjuntistas;
 
+import lineales.dinamicas.Lista;
+
 public class ArbolAVL {
     private NodoAVL raiz;
     
-    //Constructor
-    
-    public ArbolAVL()
-    {
-        /*
-        Este metodo crea un arbolBB.
-        */
-        
+    public ArbolAVL()    {
         raiz = null;
     }
     
-    //Modificadores
-    
+7    
     public boolean insertar(Comparable elemento)
     {
         /*
@@ -829,5 +823,4 @@ public class ArbolAVL {
         
         return resultado;
     }
-}
 }

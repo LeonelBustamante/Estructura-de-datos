@@ -1,17 +1,18 @@
 package conjuntistas;
 
 public class ArbolHeap {
-
     private final int TAMANIO = 20;
     private Comparable[] heap;
     private int ultimo;
 
     public ArbolHeap() {
+        // Crea un árbol vacío.
         this.heap = new Comparable[TAMANIO];
         this.ultimo = 0;// la pos 0 no es utilizada
     }
 
     public boolean insertar(Comparable elem) {
+        // Inserta un elemento en el árbol.
         boolean exito = false;
         if (this.TAMANIO > this.ultimo + 1) {
             this.heap[this.ultimo + 1] = elem;
@@ -22,7 +23,7 @@ public class ArbolHeap {
         return exito;
     }
 
-    public void hacerSubir(int posHijo) {
+    private void hacerSubir(int posHijo) {
         int posPadre;
         Comparable temp = this.heap[posHijo];
         boolean salir = false;
@@ -42,35 +43,37 @@ public class ArbolHeap {
     }
 
     public boolean eliminarCima() {
-        boolean exito;
-        if (this.ultimo == 0) {
-            exito = false;
-        } else {
-            this.heap[1] = this.heap[ultimo];
+        // Elimina el elemento de la cima del árbol.
+        boolean exito = false;
+        if (!esVacio()) {
+            this.heap[1] = this.heap[ultimo]; // el ultimo elemento se pone en la cima
             this.ultimo--;
-            hacerBajar(1);
+            hacerBajar(1); // se hace bajar el elemento de la cima
             exito = true;
         }
-        return exito;
+        return exito; // devuelve true si se ha podido eliminar la cima
     }
 
-    public void hacerBajar(int posPadre) {
-        int posH;
+    private void hacerBajar(int posPadre) {
+        // Hace bajar el elemento de la posición posPadre.
+        int posHijo;
         Comparable temp = this.heap[posPadre];
         boolean salir = false;
 
         while (!salir) {
-            posH = posPadre * 2;
-            if (posH <= this.ultimo) {
-                if (posH < this.ultimo) {
-                    if (this.heap[posH + 1].compareTo(this.heap[posH]) < 0) {
-                        posH++;
+            posHijo = posPadre * 2;
+            if (posHijo <= this.ultimo) {
+                if (posHijo < this.ultimo) {
+                    if (this.heap[posHijo + 1].compareTo(this.heap[posHijo]) < 0) {
+                        // el hijo izquierdo es menor que el derecho
+                        posHijo++;
                     }
                 }
-                if (this.heap[posH].compareTo(temp) < 0) {
-                    this.heap[posPadre] = this.heap[posH];
-                    this.heap[posH] = temp;
-                    posPadre = posH;
+                if (this.heap[posHijo].compareTo(temp) < 0) {
+                    // el hijo es menor que el padre
+                    this.heap[posPadre] = this.heap[posHijo];
+                    this.heap[posHijo] = temp;
+                    posPadre = posHijo;
                 } else {
                     salir = true;
                 }
@@ -81,46 +84,42 @@ public class ArbolHeap {
     }
 
     public Comparable recuperarCima() {
-        Comparable exito;
-        if (!this.esVacio()) {
+        // Recupera el elemento de la cima del árbol.
+        Comparable exito = null;
+        if (!esVacio()) {
             exito = this.heap[1];
-        } else {
-            exito = null;
         }
         return exito;
     }
 
     public boolean esVacio() {
-        return (this.heap[1] == null);
+        // Indica si el árbol está vacío.
+        return this.ultimo == 0;
     }
 
     public void vaciar() {
-        for (int i = 1; i <= this.ultimo; i++) {
-            this.heap[i] = null;
-        }
+        // Vacía el árbol.
         this.ultimo = 0;
     }
 
     public ArbolHeap clon() {
-        ArbolHeap copia = new ArbolHeap();
-        copia.ultimo = this.ultimo;
-        copia.heap = this.heap.clone();
-        return copia;
+        // Devuelve un clon del árbol.
+        ArbolHeap clon = new ArbolHeap();
+        clon.heap = this.heap.clone();
+        clon.ultimo = this.ultimo;
+        return clon;
     }
 
     public String toString() {
-        int i;
-        String texto, texto1 = "";
-        for (i = 1; i <= this.ultimo; i++) {
-            if (texto1 == "") {
-                texto1 = texto1 + this.heap[i].toString() + " --> HI: " + this.heap[2] + " HD: " + this.heap[3] + "\n";
-            } else {
-                texto1 = texto1 + this.heap[i].toString() + " --> HI: " + this.heap[2 * i] + " HD: "
-                        + this.heap[(2 * i) + 1] + "\n";
+        String cadena = "ESTRUCTURA VACIA";
+        if (!esVacio()) {
+            cadena = "";
+            for (int i = 1; i <= this.ultimo; i++) {
+                cadena += this.heap[i] + "\t--> HI: " + this.heap[2 * i] + "\tHD: " + this.heap[(2 * i) + 1] + "\n";
             }
 
         }
-        return texto = "ULTIMO: " + this.ultimo + "\nARBOL: \n" + texto1;
+        return cadena;
     }
 
 }

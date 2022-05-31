@@ -258,13 +258,6 @@ public class ArbolBin {
 
     private String toStringAux(NodoArbol nodo, String texto) {
         if (nodo != null) {
-            /*
-             * Casos posibles:
-             * Ambos hijos
-             * Sin hijos
-             * Hijo izq
-             * Hijo derecho
-             */
             if (nodo.getIzquierdo() != null && nodo.getDerecho() != null) {
                 texto += "NODO: " + nodo.getElem()
                         + " HI: " + nodo.getIzquierdo().getElem() + " "
@@ -286,7 +279,6 @@ public class ArbolBin {
                         + " HD: --" + "\n";
 
             }
-            // Si existieran nodos visitariamos estos hasta llegar al null
             texto = toStringAux(nodo.getIzquierdo(), texto);
             texto = toStringAux(nodo.getDerecho(), texto);
         }
