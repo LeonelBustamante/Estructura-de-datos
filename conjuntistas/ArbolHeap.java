@@ -115,11 +115,23 @@ public class ArbolHeap {
         if (!esVacio()) {
             cadena = "";
             for (int i = 1; i <= this.ultimo; i++) {
-                cadena += this.heap[i] + "\t--> HI: " + this.heap[2 * i] + "\tHD: " + this.heap[(2 * i) + 1] + "\n";
+                cadena += this.heap[i] + "\t-->";
+                if (i * 2 < this.ultimo) {
+                    // hay hijo izquierdo
+                    cadena += "HI: " + this.heap[2 * i];
+                    if (i * 2 + 1 < this.ultimo) {
+                        // hay hijo derecho
+                        cadena += "\tHD: " + this.heap[(2 * i) + 1] + "\n";
+                    } else {
+                        // no hay hijo derecho
+                        cadena += "\n";
+                    }
+                } else {
+                    // no hay hijo izquierdo
+                    cadena += "\n";
+                }
             }
-
         }
         return cadena;
     }
-
 }

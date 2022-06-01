@@ -1,196 +1,95 @@
 package conjuntistas;
 
+import lineales.dinamicas.Lista;
+import lineales.dinamicas.Nodo;
+
 public class TablaHash {
-    
-    private static int TAMANIO = 10;
+
+    private final int TAMANIO = 10;
     private Nodo[] tabla;
     private int cant;
-    
-    //Constructor
-    
-    public TablaHash()
-    {
-        /*
-        Este metodo crea una tabla hash abierta.
-        */
-        
+
+    public TablaHash() {
         tabla = new Nodo[TAMANIO];
-        cant =  0;
+        cant = 0;
     }
-    
-    //Modificadores
-    
-    public boolean insertar(Object elemento)
-    {
-        /*
-        Este metodo busca a elemento en la tabla,y si no existe, se lo inserta.
-        */
-        
-        int posc = elemento.hashCode() % TAMANIO;
-        Nodo previo = null,actual = this.tabla[posc];
-        boolean exito = true;
-       
-        if(actual == null)
-        {
-            //Si la casilla esta vacia,se agrega el primer elemento.
-            tabla[posc] = new Nodo(elemento,null);
+
+    public boolean insertar(Object elemento) {
+        int pos = Funciones.hash(elemento) % TAMANIO;
+        Nodo aux = tabla[pos];
+        boolean encontrado = buscarElemento(aux, elemento); // busca si el elemento ya esta en la tabla
+        if (!encontrado) {
+            // si no esta en la tabla, la inserto
+            tabla[pos] = new Nodo(elemento, tabla[pos]);
             cant++;
         }
-        else
-        {
-            //Si no esta vacia,se recorre la lista.
-            do
-            {
-                if(actual.getElemento().equals(elemento))
-                {
-                    //Si se encuentra el elemento,falla la insercion.
-                    exito = false;
+        return !encontrado; // devuelve true si no estaba en la tabla
+    }
+
+    private boolean buscarElemento(Nodo aux, Object elemento) {
+        // busca si el elemento ya esta en la tabla
+        boolean encontrado = false;
+        while (!encontrado && aux != null) {
+            encontrado = aux.getElem().equals(elemento);
+            aux = aux.getEnlace();
+        }
+        return encontrado;
+    }
+
+    public boolean eliminar(Object elemento) {
+        int pos = Funciones.hash(elemento) % TAMANIO;
+        Nodo aux = tabla[pos];
+        return eliminarElemento(aux, elemento, pos);
+    }
+
+    private boolean eliminarElemento(Nodo aux, Object elemento, int pos) {
+        // elimina un elemento de la tabla
+        boolean encontrado = false;
+        Nodo anterior = null;
+        while (!encontrado && aux != null) {
+            if (aux.getElem().equals(elemento)) {
+                // si lo encuentra, lo elimina
+                if (anterior == null) {
+                    // si es el primer elemento de la lista
+                    tabla[pos] = aux.getEnlace();
+                } else {
+                    // si no es el primer elemento de la lista
+                    anterior.setEnlace(aux.getEnlace());
                 }
-                else
-                {
-                    //Si no, se sigue buscando en la lista.
-                    previo = actual;
-                    actual = actual.getEnlace();
-                }
-            }while(exito && actual != null);
-            
-            if(exito)
-            {
-                //Si no se encontro elemento en la tabla,se lo agrega al final de la lista.
-                previo.setEnlace(new Nodo(elemento,null));
-                cant++;
+                cant--;
+            } else {
+                // si no es el elemento a eliminar seguimos buscando
+                anterior = aux;
+                aux = aux.getEnlace();
             }
         }
-        
-        return exito;
+        return false;
     }
-    
-    public boolean eliminar(Object elemento)
-    {
-        /*
-        Este metodo busca a elemento en la lista,y si existe en esta,lo elimina.
-        */
-        boolean exito = false;
-        int posc = elemento.hashCode() % TAMANIO;
-        Nodo previo = null,actual = this.tabla[posc];
-        
-        if(actual != null)
-        {
-            //Si la casilla no esta vacia,se busca el elemento en la lista.
-            do
-            {
-                if(actual.getElemento().equals(elemento))
-                {
-                    //Si se encuentra el elemento,la eliminacion tiene exito.
-                    exito = true;
-                    cant--;
-                }
-                else
-                {
-                    //Si no, se sigue buscando en la lista.
-                    previo = actual;
-                    actual = actual.getEnlace();
-                }
-            }while(!exito && actual != null);
-        
-        
-            if(exito)
-            {
-               //Si se encontro el elemento,se lo elimina.
-                if (previo == null) {
-                    //El elemento es el primero de la lista.
-                    tabla[posc] = actual.getEnlace();
-                } 
-                else
-                {
-                    //El elemento no es el primero ni ultimo de la lista.
-                    previo.setEnlace(actual.getEnlace());
-                }
+
+    public boolean pertenece(Object elemento) {
+        // busca si el elemento esta en la tabla
+        int pos = Funciones.hash(elemento) % TAMANIO;
+        Nodo aux = tabla[pos];
+        return buscarElemento(aux, elemento); // devuelve true si no estaba en la tabla
+    }
+
+    public boolean esVacia() {
+        // devuelve true si la tabla esta vacia
+        return cant == 0;
+    }
+
+    public Lista listar() {
+        Lista lista = new Lista();
+        for (int i = 0; i < TAMANIO; i++) {
+            // recorre la tabla
+            Nodo aux = tabla[i]; // obtiene el primer elemento de la lista
+            while (aux != null) {
+                // recorre cada celda
+                lista.insertar(aux.getElem(), lista.longitud() + 1);
+                aux = aux.getEnlace();
             }
         }
-        
-        return exito;
+        return lista;
     }
-    
-    //Observadores
-    
-    public boolean pertenece(Object elemento)
-    {
-        /*
-        Este metodo retorna un boolean dependiendo de si el elemento pertenece a la tabla.
-        */
-        
-        boolean exito = false;
-        int posc = elemento.hashCode() % TAMANIO;
-        Nodo actual = this.tabla[posc];
-        
-        if(actual != null)
-        {
-            //Si la casilla no esta vacia,se busca el elemento en la lista.
-            do
-            {
-                if(actual.getElemento().equals(elemento))
-                {
-                    //Si se encuentra el elemento,la eliminacion tiene exito.
-                    exito = true;
-                }
-                else
-                {
-                    //Si no, se sigue buscando en la lista.
-                    actual = actual.getEnlace();
-                }
-            }while(!exito && actual != null);                          
-        }
-        
-        return exito;
-    }
-    
-    public boolean esVacio()
-    {
-        /*
-        Este metodo retorna un boolean dependiendo si la tabla se encuentra vacia.
-        */
-        
-       return cant == 0;
-    }
-   
-    //Propios del tipo
-    
-    public Lista listar()
-    {
-        /*
-        Este metodo genera una lista con los elemento de la tabla.
-         */
 
-        Lista resultado = new Lista();
-        int poscTabla, poscLista;
-        Nodo actual;
-
-        if (cant > 0) 
-        {
-            //Si la tabla no esta vacia,se empieza a listar.
-            
-            poscTabla = 0;
-            poscLista = 1;
-            do 
-            {
-                //Se itera sobre las posiciones de la tabla,mientras sean menores a TAMANIO.
-                
-                actual = tabla[poscTabla];
-
-                while (actual != null) 
-                {
-                    //Se itera sobre las posiciones de la lista almacenada en la casilla poscTabla.
-                    //Se listan elementos mientras el actual no sea nulo.
-                    
-                    resultado.insertar(actual.getElemento(), poscLista++);
-                    actual = actual.getEnlace();
-                }
-
-            } while (++poscTabla < TAMANIO);
-
-        }
-        return resultado;
-    }
-}
 }
