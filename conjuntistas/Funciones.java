@@ -3,7 +3,7 @@ package conjuntistas;
 public class Funciones {
 
     public static int hash(Object elemento) {
-        int res = 0;
+        int res;
         if (elemento instanceof Integer) {
             res = hashEnteros((int) elemento);
         } else {
@@ -28,12 +28,13 @@ public class Funciones {
 
     private static int sumaFactoresPrimos(int numero) {
         int x = 2, contador = 0;
-        while (numero != 1) {
+        while (numero > 1) {
             if (numero % x == 0) {
                 contador += x;
                 numero = numero / x;
-            } else
+            } else {
                 x = x + 1;
+            }
         }
         return contador;
     }
