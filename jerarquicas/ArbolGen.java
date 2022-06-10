@@ -573,4 +573,84 @@ public class ArbolGen {
         return res;
     }
 
+    public boolean verificarCamino(Lista lis) {
+        // Metodo que recibe una lista y verifica si es un camino valido
+        boolean exito = false;
+        if (!esVacio() && !lis.esVacia()) {
+            exito = verificarCaminoAux(this.raiz, lis, 1);
+        }
+        return exito;
+    }
+
+    private boolean verificarCaminoAux(NodoGen nodo, Lista lis, int pos) {
+        // Metodo que recibe un nodo y una lista y verifica si es un camino valido
+        boolean exito = false;
+        if (pos < lis.longitud()) {
+            // Si la posicion es menor a la longitud de la lista entonces seguir
+            if (nodo != null) {
+                if (nodo.getElem().equals(lis.recuperar(pos))) {
+                    // Si encuentro el elemento que corresponde a la posicion de la lista entonces
+                    // seguir
+                    exito = verificarCaminoAux(nodo.getHijoIzquierdo(), lis, pos + 1);
+                } else {
+                    // Si no encuentro el elemento sigo buscando en el hermano derecho
+                    NodoGen hermano = nodo.getHermanoDerecho();
+                    while (hermano != null && !exito) {
+                        exito = verificarCaminoAux(hermano, lis, pos);
+                        hermano = hermano.getHermanoDerecho();
+                    }
+                }
+            }
+        } else {
+            // Si pos es igual a la longitud de la lista entonces es un camino valido
+            exito = true;
+        }
+        return exito;
+    }
+
+    public Lista listarEntreNiveles(int niv1, int niv2) {
+        // Metodo que recibe dos niveles y retorna una lista con los elementos de esos
+        // niveles
+        Lista lista = new Lista();
+        if (!esVacio() && niv1 >= 0 && niv2 >= 0 && niv1 <= niv2) {
+            listarEntreNivelesAux(this.raiz, niv1, niv2, lista, 0);
+        }
+        return lista;
+    }
+
+    private void listarEntreNivelesAux(NodoGen nodo, int nivInf, int nivSup, Lista lista, int nivelAct) {
+        // Metodo que recibe un nodo, dos niveles y una lista y retorna una lista con
+        // los elementos de esos niveles con recorrido inorden
+        if (nodo != null) {
+            if (nivelAct >= nivInf && nivelAct <= nivSup) {
+                // Si el nivel actual es mayor o igual al nivel inferior
+                // menor o igual al nivel superior
+                // entonces seguir
+                listarEntreNivelesAux(nodo.getHijoIzquierdo(), nivInf, nivSup, lista, nivelAct + 1);
+                lista.insertar(nodo.getElem(), lista.longitud() + 1);
+                if (nodo.getHijoIzquierdo() != null) {
+                    // Si el hijo izquierdo no es nulo entonces tomo al hermano del hijo izquierdo
+                    NodoGen hermanoHijo = nodo.getHijoIzquierdo().getHermanoDerecho();
+                    while (hermanoHijo != null) {
+                        // Mientras el hermano del hijo izquierdo no sea nulo
+                        listarEntreNivelesAux(hermanoHijo, nivInf, nivSup, lista, nivelAct + 1); // llamo al metodo con
+                                                                                                 // este hermano
+                        hermanoHijo = hermanoHijo.getHermanoDerecho();
+                    }
+                }
+            } else {
+                // Si el nivel actual es menor al nivel inferior bajo hasta encontrarlo o
+                // encontrar un nodo null
+                listarEntreNivelesAux(nodo.getHijoIzquierdo(), nivInf, nivSup, lista, nivelAct + 1);
+                if (nodo.getHijoIzquierdo() != null) {
+                    NodoGen hermanoHijo = nodo.getHijoIzquierdo().getHermanoDerecho();
+                    while (hermanoHijo != null) {
+                        listarEntreNivelesAux(hermanoHijo, nivInf, nivSup, lista, nivelAct + 1);
+                        hermanoHijo = hermanoHijo.getHermanoDerecho();
+                    }
+                }
+            }
+        }
+    }
+
 }
