@@ -653,4 +653,35 @@ public class ArbolGen {
         }
     }
 
+    public void repetirHEI(Object x) {
+        // Metodo que recibe un elemento y lo repite en el arbol
+        if (!esVacio()) {
+            repetirHEIAux(this.raiz, x);
+        }
+    }
+
+    private void repetirHEIAux(NodoGen nodo, Object x) {
+        boolean control = false;
+        if (nodo != null) {
+            if (nodo.getElem().equals(x) && nodo.getHijoIzquierdo() != null) {
+                NodoGen hijo = nodo.getHijoIzquierdo();
+                boolean encontrado = false;
+                while (!encontrado) {
+                    if (aux.getHermanoDerecho() != null
+                            && aux.getHermanoDerecho().getElem().equals(nodo.getHijoIzquierdo().getElem())) {
+                        encontrado = true;
+                    } else if (aux.getHermanoDerecho() == null) {
+
+                        encontrado = true;
+                    } else {
+                        aux = aux.getHermanoDerecho();
+                    }
+                }
+            } else {
+                repetirHEIAux(nodo.getHijoIzquierdo(), x);
+                repetirHEIAux(nodo.getHermanoDerecho(), x);
+            }
+        }
+    }
+
 }
