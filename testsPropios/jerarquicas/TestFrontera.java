@@ -1,6 +1,6 @@
 package testsPropios.jerarquicas;
 
-import jerarquicas.ArbolGen;
+import jerarquicas.dinamicas.ArbolGen;
 import lineales.dinamicas.Lista;
 
 public class TestFrontera {
