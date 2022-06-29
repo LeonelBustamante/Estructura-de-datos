@@ -260,28 +260,6 @@ public class ArbolGen {
         return clonActual;
     }
 
-    public Lista listarPreorden() {
-        Lista salida = new Lista();
-        listarPreordenAux(this.raiz, salida);
-        return salida;
-    }
-
-    private void listarPreordenAux(NodoGen nodo, Lista lis) {
-        if (nodo != null) {
-            // VISTA DEL NODO nodo
-            lis.insertar(nodo.getElem(), lis.longitud() + 1);
-
-            // LLAMADOS RECURSIVOS CON LOS OTROS HIJOS DE nodo
-            if (nodo.getHijoIzquierdo() != null) {
-                NodoGen hijo = nodo.getHijoIzquierdo();
-                while (hijo != null) {
-                    listarPreordenAux(hijo, lis);
-                    hijo = hijo.getHermanoDerecho();
-                }
-            }
-        }
-    }
-
     public Lista listarInorden() {
         Lista salida = new Lista();
         listarInordenAux(this.raiz, salida);
@@ -433,65 +411,49 @@ public class ArbolGen {
     }
 
     public Lista frontera() {
-        /*
-         * Metodo sin parametros que llama a meotodo privado "fronteraAux" el cual
-         * retornara una lista con las hojas del arbol
-         */
+        // Metodo que devuelve una lista con los elementos de la frontera
         Lista lis = new Lista();
         fronteraAux(this.raiz, lis);
         return lis;
     }
 
     private void fronteraAux(NodoGen nodo, Lista lis) {
-        /*
-         * Metodo privado que recibe un nodo que sera la raiz del arbol en primera
-         * instancia y una lista donde si el elemento no tiene hijos sera una hoja y
-         * este se listara
-         */
+        // Metodo que devuelve una lista con los elementos de la frontera
         if (nodo != null) {
             if (nodo.getHijoIzquierdo() == null) {
                 lis.insertar(nodo.getElem(), lis.longitud() + 1);
-            } else {
-
-                // LLAMADOS RECURSIVOS CON LOS OTROS HIJOS DE nodo
-                if (nodo.getHijoIzquierdo() != null) {
-                    NodoGen hijo = nodo.getHijoIzquierdo();
-                    while (hijo != null) {
-                        fronteraAux(hijo, lis);
-                        hijo = hijo.getHermanoDerecho();
-                    }
+            } else if (nodo.getHijoIzquierdo() != null) {
+                // Llamado recursivo con los hijos de nodo
+                NodoGen hijo = nodo.getHijoIzquierdo();
+                while (hijo != null) {
+                    fronteraAux(hijo, lis);
+                    hijo = hijo.getHermanoDerecho();
                 }
             }
         }
     }
 
     public boolean sonFrontera(Lista unaLista) {
-        boolean exito;
-        int pos = 1;
-        exito = sonFronteraAux(this.raiz, unaLista, pos);
-        return exito;
-    }
-
-    private boolean sonFronteraAux(NodoGen nodo, Lista lista, int pos) {
-        boolean exito = false;
-        if (nodo != null && pos != -1) {
-            if (nodo.getHijoIzquierdo() == null) {
-                // Si llego a un hijo izquierdo, tiene que estar en la lista
-                if (lista.recuperar(pos) == nodo.getElem()) {
-                    exito = true;
-                    pos++;
+        // Metodo que devuelve true si la lista pasada como parametro es frontera
+        boolean res = false;
+        if (!unaLista.esVacia()) {
+            res = true;
+            int puntero = 1; // puntero para recorrer la lista
+            boolean seguir = true; // Variable para controlar el ciclo
+            Lista frontera = this.frontera(); // Elementos de la frontera
+            while (unaLista.recuperar(puntero) != null && seguir) {
+                // Se recorre la lista original
+                if (frontera.localizar(unaLista.recuperar(puntero)) == -1) {
+                    // Si el elemento no esta en la frontera. Se sale del ciclo
+                    seguir = false;
+                    res = false;
                 } else {
-                    pos = -1;
-                }
-            } else {
-                NodoGen hijo = nodo.getHijoIzquierdo();
-                while (hijo != null) {
-                    sonFronteraAux(hijo, lista, pos);
-                    hijo = hijo.getHermanoDerecho();
+                    // Si el elemento esta en la frontera, se elimina de la lista
+                    puntero++;
                 }
             }
         }
-        return exito;
+        return res;
     }
 
     public boolean verificarPatron(Lista patron) {
@@ -573,4 +535,75 @@ public class ArbolGen {
         return res;
     }
 
+    public boolean verificarCamino(Lista lista) {
+        boolean exito = false;
+        if (!lista.esVacia()) {
+            exito = verificarCaminoAux(this.raiz, lista, 1);
+        }
+        return exito;
+    }
+
+    private boolean verificarCaminoAux(NodoGen nodo, Lista lista, int pos) {
+        // Metodo que verifica si un camino es valido para un arbol
+        boolean exito = false;
+        if (nodo != null && pos <= lista.longitud()) {
+            if (nodo.getElem().equals(lista.recuperar(1))) {
+                // Si el elemento del nodo es igual al elemento de la lista
+                exito = verificarCaminoAux(nodo.getHijoIzquierdo(), lista, pos + 1);
+            } else {
+                // Si el elemento del nodo no es igual al elemento de la lista
+                if (nodo.getHermanoDerecho() != null) {
+                    NodoGen hermano = nodo.getHermanoDerecho();
+                    while (hermano != null && !exito) {
+                        exito = verificarCaminoAux(hermano, lista, pos);
+                        hermano = hermano.getHermanoDerecho();
+                    }
+                }
+            }
+        }
+        return exito;
+    }
+
+    public Lista listarHastaNivel(int nivel) {
+        // Metodo que lista todos los elementos hasta un nivel dado
+        Lista lista = new Lista();
+        listarHastaNivelAux(this.raiz, lista, nivel, 0);
+        return lista;
+    }
+
+    private void listarHastaNivelAux(NodoGen nodo, Lista lista, int nivel, int nivelActual) {
+        // Metodo que lista todos los elementos hasta un nivel dado en preorden
+        if (nodo != null) {
+            lista.insertar(nodo.getElem(), lista.longitud() + 1);
+            if (nivelActual + 1 <= nivel && nodo.getHijoIzquierdo() != null) {
+                NodoGen hijo = nodo.getHijoIzquierdo();
+                while (hijo != null) {
+                    listarHastaNivelAux(hijo, lista, nivel, nivelActual + 1);
+                    hijo = hijo.getHermanoDerecho();
+                }
+            }
+        }
+    }
+
+    public Lista listarPreorden() {
+        Lista salida = new Lista();
+        listarPreordenAux(this.raiz, salida);
+        return salida;
+    }
+
+    private void listarPreordenAux(NodoGen nodo, Lista lis) {
+        if (nodo != null) {
+            // VISTA DEL NODO nodo
+            lis.insertar(nodo.getElem(), lis.longitud() + 1);
+
+            // LLAMADOS RECURSIVOS CON LOS OTROS HIJOS DE nodo
+            if (nodo.getHijoIzquierdo() != null) {
+                NodoGen hijo = nodo.getHijoIzquierdo();
+                while (hijo != null) {
+                    listarPreordenAux(hijo, lis);
+                    hijo = hijo.getHermanoDerecho();
+                }
+            }
+        }
+    }
 }

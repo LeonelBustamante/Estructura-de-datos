@@ -4,6 +4,19 @@ import lineales.dinamicas.Lista;
 
 public class ArbolBB {
 
+    /*
+     * -raiz: NodoBB
+     * +insertar(Comparable): boolean
+     * +eliminar(Comparable): boolean
+     * +pertenece(Comparable): boolean
+     * +esVacio(): boolean
+     * +vaciar(): void
+     * +maximoElemento(): Comparable
+     * +minimoElemento(): Comparable
+     * +listar(): Lista
+     * +listarRango(Comparable, Comparable): Lista
+     */
+
     private NodoABB raiz;
 
     public ArbolBB() {
@@ -256,4 +269,80 @@ public class ArbolBB {
         return texto;
     }
 
+    public boolean eliminarMinimo() {
+        // Elimina el elemento más chico del árbol
+        boolean eliminado = false;
+        if (!esVacio() && raiz.getIzquierdo() != null) {
+            eliminado = eliminarMinimoAux(raiz, raiz.getIzquierdo());
+        }
+        return eliminado;
+    }
+
+    private boolean eliminarMinimoAux(NodoABB nodo, NodoABB nodo2) {
+        // Elimina el elemento más chico del árbol
+        boolean eliminado = false;
+        if (nodo2.getIzquierdo() == null) {
+            // Si el nodo2 es el mínimo, eliminarlo
+            nodo.setIzquierdo(null);
+            eliminado = true;
+        } else {
+            // Si el nodo2 tiene hijo izquierdo, seguir bajando
+            eliminarMinimoAux(nodo.getIzquierdo(), nodo.getIzquierdo());
+        }
+        return eliminado;
+    }
+
+    public ArbolBB clonarParteInvertida(Comparable elemento) {
+        // Devuelve un árbol con la parte invertida del árbol original que contiene el
+        // elemento
+        ArbolBB arbol = new ArbolBB();
+        if (!esVacio()) {
+            NodoABB nodoAux = buscarNodo(raiz, elemento);
+            if (nodoAux != null) {
+                arbol.raiz = new NodoABB(nodoAux.getElemento(), null, null);
+                clonarParteInvertidaAux(nodoAux, arbol.raiz);
+            }
+        }
+        return arbol;
+    }
+
+    private NodoABB buscarNodo(NodoABB nodo, Comparable elemento) {
+        // Devuelve true si el elemento está en el árbol
+        NodoABB buscado = null;
+        if (nodo != null) {
+            if (elemento.compareTo(nodo.getElemento()) == 0) {
+                // encontrado
+                buscado = nodo;
+            } else if (elemento.compareTo(nodo.getElemento()) < 0) {
+                // recursivo
+                perteneceAux(elemento, nodo.getIzquierdo());
+            } else {
+                // recursivo
+                perteneceAux(elemento, nodo.getDerecho());
+            }
+        }
+        return buscado;
+    }
+
+    private void clonarParteInvertidaAux(NodoABB raiz1, NodoABB raiz2) {
+        // Devuelve un árbol con la parte invertida del árbol original que contiene el
+        // elemento
+        if (raiz1 != null) {
+            if (raiz1.getIzquierdo() != null && raiz1.getDerecho() != null) {
+                // Si el nodo1 tiene hijo izquierdo y derecho, inserto en raiz2 invertidos
+                raiz2.setDerecho(raiz1.getIzquierdo());
+                raiz2.setIzquierdo(raiz1.getDerecho());
+            } else if (raiz1.getIzquierdo() != null) {
+                // Si el nodo1 solo tiene hijo izquierdo, inserto el hijo izquierdo en el raiz2
+                // como hijo derecho
+                raiz2.setDerecho(raiz1.getIzquierdo());
+            } else if (raiz1.getDerecho() != null) {
+                // Si el nodo1 solo tiene hijo derecho, inserto el hijo derecho en el raiz2 como
+                // hijo izquierdo
+                raiz2.setIzquierdo(raiz1.getDerecho());
+            }
+            clonarParteInvertidaAux(raiz1.getIzquierdo(), raiz2.getDerecho());
+            clonarParteInvertidaAux(raiz1.getDerecho(), raiz2.getIzquierdo());
+        }
+    }
 }

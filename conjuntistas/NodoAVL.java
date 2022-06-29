@@ -7,7 +7,7 @@ public class NodoAVL {
     private NodoAVL derecho;
     private int altura;
 
-    public NodoAVL(Comparable elemento, NodoAVL izquierdo, NodoAVL derecho, int altura) {
+    public NodoAVL(Comparable elemento, NodoAVL izquierdo, NodoAVL derecho) {
         this.elemento = elemento;
         this.izquierdo = izquierdo;
         this.derecho = derecho;
@@ -46,10 +46,10 @@ public class NodoAVL {
         int alturaIzquierdo = 0;
         int alturaDerecho = 0;
         if (izquierdo != null) {
-            alturaIzquierdo = izquierdo.getAltura();
+            alturaIzquierdo = izquierdo.altura;
         }
         if (derecho != null) {
-            alturaDerecho = derecho.getAltura();
+            alturaDerecho = derecho.altura;
         }
         altura = Math.max(alturaIzquierdo, alturaDerecho) + 1;
     }
