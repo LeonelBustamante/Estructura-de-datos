@@ -7,12 +7,10 @@ public class ArbolGen {
 
     private NodoGen raiz;
 
-    // CONSTRUCTOR
     public ArbolGen() {
         this.raiz = null;
     }
 
-    // MODIFICADORES
     public boolean insertar(Object elemNuevo, Object elemPadre) {
         // METODO QUE BUSCA UN ELEMENTO PADRE Y AGREGA UN elemNuevo COMO HIJO
         boolean exito = false;
@@ -62,7 +60,6 @@ public class ArbolGen {
         this.raiz = null;
     }
 
-    // VISUALIZADORES
     public boolean pertenece(Object elem) {
         // METODO QUE VERIFICA SI UN ELEMENTO PERTENECE AL ARBOL
         NodoGen encontrado = buscarNodo(this.raiz, elem); // PARA ESTE METODO REUTILIZO EL METODO BUSCAR NODO
