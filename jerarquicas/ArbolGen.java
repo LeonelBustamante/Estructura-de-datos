@@ -532,35 +532,6 @@ public class ArbolGen {
         return res;
     }
 
-    public boolean verificarCamino(Lista lista) {
-        boolean exito = false;
-        if (!lista.esVacia()) {
-            exito = verificarCaminoAux(this.raiz, lista, 1);
-        }
-        return exito;
-    }
-
-    private boolean verificarCaminoAux(NodoGen nodo, Lista lista, int pos) {
-        // Metodo que verifica si un camino es valido para un arbol
-        boolean exito = false;
-        if (nodo != null && pos <= lista.longitud()) {
-            if (nodo.getElem().equals(lista.recuperar(1))) {
-                // Si el elemento del nodo es igual al elemento de la lista
-                exito = verificarCaminoAux(nodo.getHijoIzquierdo(), lista, pos + 1);
-            } else {
-                // Si el elemento del nodo no es igual al elemento de la lista
-                if (nodo.getHermanoDerecho() != null) {
-                    NodoGen hermano = nodo.getHermanoDerecho();
-                    while (hermano != null && !exito) {
-                        exito = verificarCaminoAux(hermano, lista, pos);
-                        hermano = hermano.getHermanoDerecho();
-                    }
-                }
-            }
-        }
-        return exito;
-    }
-
     public Lista listarHastaNivel(int nivel) {
         // Metodo que lista todos los elementos hasta un nivel dado
         Lista lista = new Lista();

@@ -103,9 +103,6 @@ public class TestGen {
         System.out.println(">>sonFrontera([2,4,9]): ESPERA FALSE " + arbol.sonFrontera(fronteraMal));
         Lista listaJustificaAltura = arbol.listaQueJustificaLaAltura();
         System.out.println(">>listaQueJustificaAltura(): ESPERA [1,3,4] " + listaJustificaAltura);
-        System.out.println(">>verificarCamino(listaJustificaAltura): ESPERA TRUE " + arbol.verificarCamino(listaJustificaAltura));
-        listaJustificaAltura.insertar(5, listaJustificaAltura.longitud() + 1);
-        System.out.println(">>verificarCamino(listaJustificaAltura): ESPERA FALSE " + arbol.verificarCamino(listaJustificaAltura));
         System.out.println(">>listarHastaNivel(0): ESPERA [1] " + arbol.listarHastaNivel(0));
         System.out.println(">>listarHastaNivel(1): ESPERA [1,3,2] " + arbol.listarHastaNivel(1));
         System.out.println(">>listarHastaNivel(2): ESPERA [1,3,4,2] " + arbol.listarHastaNivel(2));
