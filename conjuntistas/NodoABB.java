@@ -12,27 +12,34 @@ public class NodoABB {
         this.derecho = derecho;
     }
 
-    public Comparable getElemento() {
-        return elemento;
+    public NodoABB(Comparable elemento) {
+        this.elemento = elemento;
+        this.izquierdo = null;
+        this.derecho = null;
     }
 
-    public void setElemento(Comparable elemento) {
-        this.elemento = elemento;
+    public Comparable getElemento() {
+        return elemento;
     }
 
     public NodoABB getIzquierdo() {
         return izquierdo;
     }
 
-    public void setIzquierdo(NodoABB izquierdo) {
-        this.izquierdo = izquierdo;
-    }
-
     public NodoABB getDerecho() {
         return derecho;
+    }
+
+    public void setElemento(Comparable elemento) {
+        this.elemento = elemento;
+    }
+
+    public void setIzquierdo(NodoABB izquierdo) {
+        this.izquierdo = izquierdo;
     }
 
     public void setDerecho(NodoABB derecho) {
         this.derecho = derecho;
     }
+
 }
